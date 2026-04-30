@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const PlaceOrder = () => {
     let {totalPrice,token,cart,products,setCart} = useContext(context);
-    const [method,setMethod] = useState("");
+    const [method,setMethod] = useState("cash on delivery");
     let nav = useNavigate();
     const [formData,setFormData]= useState({
         firstName:"",
@@ -164,7 +164,7 @@ const PlaceOrder = () => {
                     <div className={`w-[30%] border-[1px]  flex items-center gap-[10px] h-[40px] justify-center cursor-pointer`} onClick={()=> {
                         setMethod("cash on delivery")
                     }}>
-                        <div className={`w-[15px] h-[15px] rounded-full   ${method==="cash"?"bg-green-700":""} `}>
+                        <div className={`w-[15px] h-[15px] rounded-full   ${method==="cash on delivery"?"bg-green-700":""} `}>
                         </div>
                         <span className=''>cash on delivery</span>
                     </div>

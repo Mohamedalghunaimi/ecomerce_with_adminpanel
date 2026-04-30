@@ -13,7 +13,6 @@ const addProduct =async(req,res,next)=> {
         sizes,
         bestSeller,
     }= req.body
-    console.log(req.body)
     try {
         const image1=req.files.image1&&req.files.image1[0]
         const image2=req.files.image2&&req.files.image2[0]
@@ -72,7 +71,13 @@ const listProduct = async(req,res,next)=> {
     }
 }
 const singleProduct = async(req,res,next)=> {
-    const {id} = req.body
+    const {id} = req.body;
+    if(!id) {
+        return res.json({
+            success:false,
+            message:"missing details"
+        })
+    }
     try {
         await main()
         const singleProduct = await Product.findById(id)
@@ -84,19 +89,32 @@ const singleProduct = async(req,res,next)=> {
             singleProduct
         })
     }catch(err) {
-            return res.json({success:false,message:err.message})
+            return res.json({success:false,message:"something went wrong in the server"})
 
     }
 }
 
 const removeProduct = async (req,res,next)=> {
-    const {id} = req.body
+    const {id} = req.body;
+    if(!id) {
+        return res.json({
+            success:false,
+            message:"missing details"
+        })
+    }
     try {
-        await main()
-        const removeProduct = await Product.findByIdAndDelete(id)
+        await main();
+        const existingProduct = await Product.findById(id);
+        if(!existingProduct) {
+            return res.json({
+                success:false,
+                message:"product not found"
+            })
+        }
+        await Product.findByIdAndDelete(id)
         res.json({
             success:true,
-            removeProduct
+            message:"product is removed successfully!"
         })
 
 

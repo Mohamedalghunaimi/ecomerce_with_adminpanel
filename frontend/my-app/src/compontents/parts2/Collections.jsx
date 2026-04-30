@@ -91,12 +91,12 @@ const Collections = () => {
             </div>
 
         </div>
-        <div className='flex flex-wrap gap-[5px] justify-between '>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 gap-2'>
             {filteredProducts.map((element,index)=> {
                 return (
                     <>
                     <Link to={`/product/${element._id}`}>
-                    <div key={index} className='w-[240px] cursor-pointer overflow-hidden'>
+                    <div key={index} className='cursor-pointer overflow-hidden'>
                         <div className='overflow-hidden'>
                             <img src={element.image[0]} alt=' ' className='w-[100%] transition duration-[0.3s] hover:scale-125 ' />
                         </div>

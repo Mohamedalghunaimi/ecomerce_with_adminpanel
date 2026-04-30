@@ -25,8 +25,7 @@ const Provider = ({children}) => {
                     setCart(data.cartData)
                 }
                 } catch (error) {
-                    toast.error(error.message)
-                    
+                    console.log(error)
                 }
                 
         }
@@ -37,10 +36,12 @@ const Provider = ({children}) => {
         if(!size) {
             return toast.error("please enter the size")
         }
+
         try {
             const {data} = await axios.post("http://localhost:5000/api/cart/add",{
                 itemId:cartId,
-                size},{
+                size
+            },{
                     headers :{
                         token
                     }
@@ -52,7 +53,6 @@ const Provider = ({children}) => {
                 toast.error(data.message)
             }
         } catch (error) {
-            //toast.error(error.message)
             console.error(error)
         }
 
@@ -67,7 +67,7 @@ const Provider = ({children}) => {
     }
     return total;
     }
-        const totalPrice = ()=> {
+    const totalPrice = ()=> {
             let totalPrice = 0;
             cartDetails.forEach(element => {
                 const product = products.find((ele)=> {
@@ -79,8 +79,8 @@ const Provider = ({children}) => {
                 totalPrice+=product.price*element.quantity
             });
             return totalPrice
-        }
-            const location = useLocation()
+    }
+    const location = useLocation()
     useEffect(()=> {
         if((!token)&&(localStorage.getItem("token"))) {
             setToken(localStorage.getItem("token"))
@@ -91,11 +91,7 @@ const Provider = ({children}) => {
         if(!token) {
             nav("/login")
         }
-        else {
-            console.log(location)
-            nav(`${location.pathname}${location.search}`)
 
-        }
     },[token,location.pathname])
 
     useEffect(()=> {
@@ -112,9 +108,7 @@ const Provider = ({children}) => {
                 }
             }catch(error) {
                 console.log(error)
-                toast.error(error.message)
             }
-
         }
         useEffect(()=> {
             getAllProducts()

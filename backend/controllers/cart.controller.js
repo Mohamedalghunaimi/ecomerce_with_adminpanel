@@ -4,10 +4,22 @@ var jwt = require('jsonwebtoken');
 
 const addToCart =async(req,res,next) => {
     const {id} = req ;
-    const {itemId,size} = req.body
+    const {itemId,size} = req.body;
+    if(!itemId || !size) {
+        return res.json({
+            success:false,
+            message:"missing details"
+        })
+    }
     try {
         await main();
         const user = await User.findById(id);
+        if(!user) {
+            return res.json({
+                success:false ,
+                message:"user not found "
+            })
+        }
         const cartData= structuredClone(user.cartData)
         if(cartData[itemId]) {
             if(cartData[itemId][size]) {
@@ -36,7 +48,7 @@ const addToCart =async(req,res,next) => {
 const updateCart = async(req,res,next)=> {
     const {id} = req
     const {value,size,itemId} = req.body;
-    if(!value || !size || itemId) {
+    if(!value || !size || !itemId) {
         return res.json({
             success:false,
             message:"missing details"
@@ -68,6 +80,12 @@ const removeFromCart = async (req,res,next) => {
         await main();
         const user = await User.findById(id)
         const cartData = structuredClone(user.cartData)
+        if(!cartData[itemId][size]) {
+            return res.json({
+                success:"false",
+                message:"there is no product in the cart"
+            })
+        }
         delete cartData[itemId][size]
         user.cartData = cartData
         const newUser = await user.save();

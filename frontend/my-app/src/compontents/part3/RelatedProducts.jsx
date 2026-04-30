@@ -28,7 +28,7 @@ const RelatedProducts = ({category,subCategory,product}) => {
 
     },[products,category,subCategory])
 
-  return (
+  return relatedProducts.length?(
     <div className="container mx-auto">
          <div className='flex items-center gap-[10px] uppercase justify-center'>
             <span className='text-3xl'>
@@ -76,7 +76,7 @@ const RelatedProducts = ({category,subCategory,product}) => {
     </div>
       
     </div>
-  )
+  ):(<></>)
 }
 
 export default RelatedProducts

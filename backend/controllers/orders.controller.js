@@ -13,8 +13,10 @@ const getOrders = async (req,res,next)=> {
     const userId = req.id
     try {
         await main();
-        const orders = await Order.findOne({userId})
-        if(!orders) {
+        const orders = await Order.find({
+            userId
+        })
+        if(!orders.length) {
             return res.json({
                 success:false,
                 message:"There is no orders"
@@ -27,14 +29,20 @@ const getOrders = async (req,res,next)=> {
     }catch(error) {
         res.json({
             success:false,
-            message:error.message
+            message:"something went wrong in the server"
         })
     }
 }
 /// by cod
 const setOrders = async (req,res,next) => {
     const userId = req.id
-    const {address,amount,items,paymentMethod} = req.body;
+    const {address,amount,items,paymentMethod='CMD'} = req.body;
+    if(!address || !amount || !items ) {
+        return res.json({
+            success:false,
+            message:"missing details"
+        })
+    }
     try {
         await main()
         const order = await Order.findOne({userId})
@@ -69,7 +77,7 @@ const setOrders = async (req,res,next) => {
         console.log(error)
         res.json({
             success:true,
-            message:error.message
+            message:"something went wrong in the server"
         })
 
     }
@@ -80,8 +88,8 @@ const setOrderByStripe = async(req,res,next)=> {
     const {origin} = req.headers
     try {
         await main();
-        const order = await Order.findOne({userId})
-        let newOrder
+        let order = await Order.findOne({userId})
+        let newOrder;
         if(!order) {
             const newOrder = new Order({
                 userId,
@@ -156,16 +164,29 @@ const allOrders = async (req,res,next)=> {
     } catch (error) {
         res.json({
             success:false,
-            message:error.message
+            message:"something went wrong in the server"
         })
         
     }
 }
 const changeStatus = async (req,res,next)=> {
-    const {status,id} = req.body
+    const {status,id} = req.body;
+    if(!status || !id)  {
+        return res.json({
+            success:false,
+            message:"missing details"
+        })
+
+    }
     try {
         await main();
-        const order = await Order.findById(id)
+        const order = await Order.findById(id);
+        if(!order) {
+            return res.json({
+                success:false,
+                message:"order not found"
+            })
+        }
         order.status = status
         await order.save();
         res.json({
@@ -176,15 +197,21 @@ const changeStatus = async (req,res,next)=> {
     } catch (error) {
         res.json({
             success:false,
-            message:error.message
+            message:"something went wrong in the  server"
         })
         
     }
 
 }
 const verify = async (req,res,next) => {
-    const {success,orderId} = req.body
-    const userId = req.id
+    const {success=false,orderId} = req.body
+    const userId = req.id;
+    if(!orderId) {
+        return res.json({
+            success:false,
+            message:"missing details"
+        })
+    }
 
     try {
         await main();
@@ -192,7 +219,13 @@ const verify = async (req,res,next) => {
         const user = await User.findById(userId)
         user.cartData = {};
         await user.save();
-        const order = await Order.findById(orderId)
+        const order = await Order.findById(orderId);
+        if(!order) {
+            return res.json({
+                success:false,
+                message:"order not found"
+            })
+        }
         order.payment=true;
         await order.save()
         res.json({
@@ -207,7 +240,7 @@ const verify = async (req,res,next) => {
     } catch (error) {
         res.json({
             success:false,
-            message:error.message
+            message:"something went wrong in the  server"
         })
         
     }

@@ -26,7 +26,6 @@ const Orders = () => {
         }
     } catch (error) {
         console.log(error)
-        toast.error(error.message)
     }
     }
     const setStatus = async()=> {
@@ -52,8 +51,10 @@ const Orders = () => {
         fetchAllOrders()
     },[token])
     useEffect(()=> {
-        setStatus()
+        if(state.id) {
+            setStatus()
 
+        }
     },[state])
     return orders.length?(
     <div>

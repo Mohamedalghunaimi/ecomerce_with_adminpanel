@@ -51,7 +51,6 @@ const CartPage = () => {
     const remove = async(id,size)=> {
         const copy= structuredClone(cart)
         copy[id][size] =0
-        //setCart(copy)
         try {
             const {data} = await axios.post("http://localhost:5000/api/cart/remove",{itemId:id,size},{
                 headers:{
@@ -78,7 +77,7 @@ const CartPage = () => {
     
  return cartDetails.length?(
     <>
-    <div className='container mx-auto h-auto min-h-[500px]'>
+    <div className='container mx-auto h-auto min-h-[500px] py-10'>
         <table className='w-[100%] capitalize '>
             <thead className='font-semibold'>
                 <tr className='text-center mb-[10px]'>
@@ -139,7 +138,7 @@ const CartPage = () => {
                                 <span className='mx-auto text-2xl w-fit block cursor-pointer' onClick={()=> {
                                     remove(element1._id,element1.size)
                                 }}>
-                                    <CiCircleRemove />
+                                    <CiCircleRemove  className=' text-red-800 font-bold' />
                                 </span>
                             </td>
                             

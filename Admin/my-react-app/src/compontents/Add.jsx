@@ -74,25 +74,25 @@ const Add = () => {
         </h1>
         <div className='flex gap-[10px]'>
             <label for="img1">
-                <input type='file' hidden  id="img1" required  onChange={(e)=> {
+                <input disabled={loading} type='file' hidden  id="img1" required  onChange={(e)=> {
                     setImg1(e.target.files[0])
                 }}/>
                 <img src={!img1?assets.upload_area:URL.createObjectURL(img1)} className='cursor-pointer w-[100px] h-[100px]' alt=" "/>
             </label>
             <label for="img2">
-                <input type='file' hidden  id="img2"   onChange={(e)=> {
+                <input disabled={loading} type='file' hidden  id="img2"   onChange={(e)=> {
                     setImg2(e.target.files[0])
                 }}/>
                 <img src={!img2?assets.upload_area:URL.createObjectURL(img2)} className='cursor-pointer w-[100px] h-[100px]' alt=" "/>
             </label>
             <label for="img3">
-                <input type='file' hidden  id="img3"  onChange={(e)=> {
+                <input disabled={loading} type='file' hidden  id="img3"  onChange={(e)=> {
                     setImg3(e.target.files[0])
                 }}/>
                 <img  src={!img3?assets.upload_area:URL.createObjectURL(img3)} className='cursor-pointer w-[100px] h-[100px]' alt=" "/>
             </label>
             <label for="img4">
-                <input type='file' hidden  id="img4"    onChange={(e)=> {
+                <input disabled={loading} type='file' hidden  id="img4"    onChange={(e)=> {
                     setImg4(e.target.files[0])
                 }}/>
                 <img src={!img4?assets.upload_area:URL.createObjectURL(img4)} className='cursor-pointer w-[100px] h-[100px]' alt=" "/>
@@ -114,7 +114,7 @@ const Add = () => {
                 <span>
                     product category
                 </span>
-                <select className='w-[150px] border-[2px] capitalize' required value={category} onChange={(e)=> {
+                <select disabled={loading} className='w-[150px] border-[2px] capitalize' required value={category} onChange={(e)=> {
             setCategory(e.target.value)
             }} >
                     <option value={"men"}>
@@ -132,7 +132,7 @@ const Add = () => {
                     <span>
                     product price
                     </span>
-                    <input type='number' placeholder='25' min={0} className='border-[1px] w-[100px]' value={price} onChange={(e)=> {
+                    <input disabled={loading} type='number' placeholder='25' min={0} className='border-[1px] w-[100px]' value={price} onChange={(e)=> {
                     setPrice(e.target.value)
                 }} />
                 </div>
@@ -140,7 +140,7 @@ const Add = () => {
                 <span>
                     sub categry
                 </span>
-                <select className='w-[150px] border-[2px] capitalize' required value={subCategory} onChange={(e)=> {
+                <select  disabled={loading} className='w-[150px] border-[2px] capitalize' required value={subCategory} onChange={(e)=> {
             setSubCategory(e.target.value)
             }} >
                     <option value={"topwear"}>
@@ -160,33 +160,38 @@ const Add = () => {
         </h1>
         <div className='flex gap-[10px] uppercase'>
             <span className={`py-[5px] px-[10px] bg-gray-200 cursor-pointer ${sizes.includes("s")?"bg-violet-800 text-white":""}`} onClick={()=> {
+                if(!loading)
                 removeOrAdd("s")
             }}>
                 s
             </span>
             <span className={`py-[5px] px-[10px] bg-gray-200 cursor-pointer ${sizes.includes("m")?"bg-violet-800 text-white":""}`}onClick={()=> {
+                if(!loading)
                 removeOrAdd("m")
             }}>
                 m
             </span>
             <span className={`py-[5px] px-[10px] bg-gray-200 cursor-pointer ${sizes.includes("l")?"bg-violet-800 text-white":""}`}onClick={()=> {
+                if(!loading)
                 removeOrAdd("l")
             }}>
                 l
             </span>
             <span className={`py-[5px] px-[10px] bg-gray-200 cursor-pointer ${sizes.includes("xl")?"bg-violet-800 text-white":""}`}onClick={()=> {
+                if(!loading)
                 removeOrAdd("xl")
             }}>
                 xl
             </span>
             <span className={`py-[5px] px-[10px] bg-gray-200 cursor-pointer ${sizes.includes("xxl")?"bg-violet-800 text-white":""}`}onClick={()=> {
+                if(!loading)
                 removeOrAdd("xxl")
             }}>
                 xxl
             </span>
         </div>
         <div className='flex items-center gap-[10px]'>
-            <input type='checkbox' id="id" checked={bestseller} onChange={()=> {
+            <input disabled={loading} type='checkbox' id="id" checked={bestseller} onChange={()=> {
                 if(bestseller) {
                     setBestSeller(false)
                 }
@@ -201,7 +206,7 @@ const Add = () => {
         <button disabled={loading} className='capitalize bg-black text-white w-fit py-[5px] px-[50px] ' onClick={()=> {
             add()
         }}>
-            add
+            {loading?"loading...":"add"}
         </button>
     </div>
   )

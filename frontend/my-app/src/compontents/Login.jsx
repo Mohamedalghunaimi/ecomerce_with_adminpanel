@@ -15,14 +15,13 @@ const Login = () => {
         if(token) {
             nav("/")
         }
-        console.log("from login")
-
     },[token])
 
     const submit = async()=> {
         try {
             if(state==="login") {
             const {data} = await axios.post("http://localhost:5000/api/auth/login",{email,password})
+            console.log(data)
             if(data.success) {
                 setToken(data.token)
                 localStorage.setItem("token",data.token)
@@ -33,7 +32,7 @@ const Login = () => {
             }
             }
             else {
-                 const {data} = await axios.post("http://localhost:5000/api/auth/register",{name,email,password})
+            const {data} = await axios.post("http://localhost:5000/api/auth/register",{name,email,password})
             if(data.success) {
                 setToken(data.token)
                 localStorage.setItem("token",data.token)
@@ -44,7 +43,7 @@ const Login = () => {
             }
             }
         } catch (error) {
-                toast.error(error.message)
+            console.error(error)
 
         }
 
@@ -61,7 +60,7 @@ const Login = () => {
             <input type='text' placeholder='email' className='border-[2px] p-[5px]'  value={email} onChange={(e)=> {
                 setEmail(e.target.value)
             }} />
-            <input type='text' placeholder='password' className='border-[2px] p-[5px]'   value={password} onChange={(e)=> {
+            <input type='password' placeholder='password' className='border-[2px] p-[5px]'   value={password} onChange={(e)=> {
                 setPassword(e.target.value)
             }} />
             <div className='flex justify-between items-center capitalize'>
@@ -77,7 +76,6 @@ const Login = () => {
                 }}>
                     create account
                 </span></>}
-               
             </div>
             <button onClick={()=> {
                 submit()
