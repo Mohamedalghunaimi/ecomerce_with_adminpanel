@@ -9,7 +9,7 @@ import { assets } from '../admin_assets/assets'
 const Orders = () => {
     const [orders,setOrders] = useState([])
     const {token} = useContext(context);
-    const [state,setState] = useState({status:"",id:""})
+    const [state,setState] = useState({status:"order placed",id:""})
 
     const fetchAllOrders = async()=> {
     try {
@@ -108,7 +108,8 @@ const Orders = () => {
                             ${element.amount}
                         </li>
                     </ul>
-                    <select className='border-[1px]' value={state} onChange={(e)=> {
+                    <select className='border-[1px]' value={state.status} onChange={(e)=> {
+                        console.log(e.target.value)
                         setState({status:e.target.value,id:element._id})
                     }}>
                         <option value={"order placed"}>

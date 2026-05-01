@@ -37,12 +37,12 @@ const Collections = () => {
             setFilteredProducts(productCopy)
         }
         const sort = ()=> {
-            if(sortValue==="2") {
+            if(sortValue==="3") {
                 setFilteredProducts(filteredProducts.sort((a,b)=> {
                     return b.price - a.price
                 }))
             }
-            else if(sortValue==="3") {
+            else if(sortValue==="2") {
                 setFilteredProducts(filteredProducts.sort((a,b)=> {
                     return a.price - b.price
                 }))
