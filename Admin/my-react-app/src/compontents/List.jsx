@@ -88,10 +88,14 @@ const List = () => {
                             <td>
                                 {ele.subCategory}
                             </td>
-                            <td className='font-bold text-3xl cursor-pointer' onClick={()=> {
-                                remove(ele._id)
+                            <td onClick={()=> {
+                                
                             }}>
-                                X 
+                                <button onClick={()=> {
+                                    remove(ele._id)
+                                }} className=' text-white bg-red-600 px-5 py-4 capitalize rounded-xl font-semibold'>
+                                    delete
+                                </button> 
                             </td>
                         </tr>
                         </>)

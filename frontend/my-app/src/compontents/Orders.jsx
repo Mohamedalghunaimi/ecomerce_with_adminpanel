@@ -27,11 +27,11 @@ const Orders = () => {
         }
     }
     useEffect(()=> {
-        if(token)
-        fetchOrders()
-
+        if(token){
+            fetchOrders()
+        }
     },[token])
-  return orders.items.length>0?
+    return orders.items.length>0?
     (
     <div className='container mx-auto flex min-h-screen flex-col gap-[10px]'>
         <h1 className='text-center text-2xl capitalize font-bold'>
@@ -56,7 +56,7 @@ const Orders = () => {
                                 Date:
                             </span>
                             <span className='text-gray-500'>
-                                {element.date}
+                                {new Date(element.date).toDateString()}
                             </span>
                         </p>
                     </div>
