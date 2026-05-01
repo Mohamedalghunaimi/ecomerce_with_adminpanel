@@ -30,6 +30,7 @@ const Provider = ({children}) => {
                 
         }
         useEffect(()=> {
+            if(token)
             getCart()
         },[token,cart])
     const addToCart = async(cartId,size)=> {
