@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { useEffect } from 'react'
 import { context } from './Provider'
 import { toast } from 'react-toastify'
+import { confirmAction, errorAlert, showAlert } from '../methods/alerts'
 
 const List = () => {
     const [list,setList] = useState([])
@@ -19,6 +20,10 @@ const List = () => {
 
     }
     const remove = async(id)=> {
+        const result = await showAlert();
+        if(!result.isConfirmed) {
+            return 
+        }
         try {
             const {data} = await axios.post("http://localhost:5000/product/removeproduct",{id},{
                 headers :{
@@ -28,6 +33,7 @@ const List = () => {
             if(data.success) {
                 toast.success(data.message)
                 fetchList()
+                confirmAction()
             }
             else {
                 toast.error(data.message)
@@ -35,7 +41,8 @@ const List = () => {
 
         } catch (error) {
             console.log(error)
-            toast.error(error.message)
+            errorAlert()
+
 
         }
         
